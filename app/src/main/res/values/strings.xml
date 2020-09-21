@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Sample-Android-SDK</string>
+    <string name="launch_web_app">Launch web app</string>
+
+    <string name="persistent_channel_name">Foreground service</string>
+    <string name="persistent_channel_description">Tracking service persistent notification (do not disable)</string>
+    <string name="tracking_notification_message">You are currently earning CO2-hearts</string>
+</resources>
