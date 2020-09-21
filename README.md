@@ -43,7 +43,7 @@ No change at root build.gradle is required. Everything listed in this session ca
     }
 ``` 
 
-3. (Get a token from GitHub)[https://docs.github.com/pt/github/authenticating-to-github/creating-a-personal-access-token] so you can access GitHub packages. This is required even though our sdk is published in a non-private [repository](github.com/Changers/Sample-Android-SDK/). Then add our maven repository at module level:
+3. [Get a token from GitHub](https://docs.github.com/pt/github/authenticating-to-github/creating-a-personal-access-token) so you can access GitHub packages. This is required even though our sdk is published in a non-private [repository](github.com/Changers/Sample-Android-SDK/). Then add our maven repository at module level:
 
 ```gradle
     repositories {
@@ -60,7 +60,7 @@ No change at root build.gradle is required. Everything listed in this session ca
         }
     }
 ``` 
-4. And finally add the SDK as a implementation dependency:
+4. And finally add the SDK as an implementation dependency:
 
 ```gradle
     dependencies {
