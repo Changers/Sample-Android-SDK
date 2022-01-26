@@ -70,7 +70,9 @@ No change at root build.gradle is required. Everything listed in this session ca
 
 
 
-## 2. Initialize the SDK
+## 2. Integrate the SDK
+
+### 2.1. Initialization
 
 You need to initialize the SDK before launching the Web App. We recommend doing this at your Application.
 
@@ -98,6 +100,46 @@ You need to initialize the SDK before launching the Web App. We recommend doing 
 ``` 
 
 You must create a notification so our foreground service can keep listening for location updates and tracking works properly.
+
+### 2.2. Authenticate the client
+
+Your client needs to be registered with [Changers](changers.com) to be able to make requests to our API. Once you got your client id and client secret, execute once:
+```kotlin
+   val clientToken = Changers.authenticateClient(
+       BuildConfig.CLIENT_ID, 
+       BuildConfig.CLIENT_SECRET
+   )
+```
+
+*Important: This method does blocking network communication, and should be called from a background thread.*
+
+This method returns a `ClientToken` object that contains client authentication information. You don't need to authenticate the client again until the `ClientToken` has expired. You need to store the `timestamp` under `ClientToken.expiresIn` and authenticate again once the token has expired, or else a `401 Unauthorized` error response is going to be encapsulated in an  `IOException` thrown by the HTTP library.
+
+You can clear all state by executing `Changers.clear()`. 
+
+
+### 2.3. Authenticate the user
+
+Once the client is authenticated, the user also needs to be authenticated. For that, you can create a new user by executing:
+```kotlin
+   val userToken = Changers.signup()
+```
+
+The method accepts no parameter and returns a `UserToken` object. This should be done only once, but you need to store the  `UserToken.uuid` value in order to be able to log user in, for example, after a reinstall. You can also log the user in by providing the `UserToken.uuid` to the method:
+```kotlin
+    Changers.logUserIn(uuid: String)
+```
+
+In either the case of an existing or returning user, user authentication only needs to be done once per install. Whether you are signing up or logging in, the client must be authenticated first. You can check the clinet authentication status using the following flag:
+```kotlin
+    Changers.isClientAuthenticated
+```
+You can also check the state of the user authentication by using the following flag:
+```kotlin
+    Changers.isUserAuthenticated
+```
+You can clear all state by executing `Changers.clear()`. In that case, you need to authenticate the client again.
+
 
 ## 3. Changes in Manifest:
 
