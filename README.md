@@ -64,7 +64,7 @@ No change at root build.gradle is required. Everything listed in this session ca
 
 ```gradle
     dependencies {
-        implementation 'com.blacksquared:sdk:1.0.0'
+        implementation 'com.blacksquared:sdk:1.12.6'
     }
 ``` 
 
