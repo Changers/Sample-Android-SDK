@@ -58,13 +58,15 @@ No change at root build.gradle is required. Everything listed in this session ca
                 basic(BasicAuthentication)
             }
         }
+        maven { url "https://pkgs.dev.azure.com/motiontag/releases/_packaging/releases/maven/v1" }
+        maven { url = "https://plugins.gradle.org/m2/" }
     }
 ``` 
 4. And finally add the SDK as an implementation dependency:
 
 ```gradle
     dependencies {
-        implementation 'com.blacksquared:sdk:1.12.6'
+        implementation 'com.blacksquared:sdk:1.12.7'
     }
 ``` 
 
