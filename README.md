@@ -47,17 +47,7 @@ No change at root build.gradle is required. Everything listed in this session ca
 
 ```gradle
     repositories {
-        maven {
-            url = uri("https://maven.pkg.github.com/Changers/Sample-Android-SDK")
-            credentials {
-                username = "$System.env.GITHUB_USERNAME"
-                password = "$System.env.GITHUB_TOKEN"
-            }
-    
-            authentication {
-                basic(BasicAuthentication)
-            }
-        }
+        maven { url 'https://jitpack.io' }
         maven { url "https://pkgs.dev.azure.com/motiontag/releases/_packaging/releases/maven/v1" }
         maven { url = "https://plugins.gradle.org/m2/" }
     }
@@ -66,7 +56,7 @@ No change at root build.gradle is required. Everything listed in this session ca
 
 ```gradle
     dependencies {
-        implementation 'com.blacksquared:sdk:1.12.7'
+        implementation 'com.github.Changers.Android-SDK:sdk:1.13.4'
     }
 ``` 
 
