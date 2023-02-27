@@ -56,7 +56,10 @@ No change at root build.gradle is required. Everything listed in this session ca
 
 ```gradle
     dependencies {
-        implementation 'com.github.Changers.Android-SDK:sdk:1.13.4'
+        implementation 'com.github.Changers.Android-SDK:sdk:1.15.5'
+        
+        // for testing on stage use this
+        //implementation "com.github.Changers.Android-SDK:sdkstaging:1.15.5"
     }
 ``` 
 
