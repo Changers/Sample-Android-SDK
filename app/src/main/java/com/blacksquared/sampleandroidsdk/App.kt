@@ -25,7 +25,8 @@ class App : android.app.Application() {
                         displayName = getString(R.string.app_name),
                         clientId = BuildConfig.CLIENT_ID,
                         clientSecret = BuildConfig.CLIENT_SECRET,
-                        version = BuildConfig.VERSION_NAME
+                        version = BuildConfig.VERSION_NAME,
+                        pusherInstanceId = "" // leave blank except you have setup firebase and have created a PusherInstance
                 )
         )
     }
