@@ -48,7 +48,7 @@ No change at root build.gradle is required. Everything listed in this session ca
 ```gradle
     repositories {
     
-          //this should come before jitpack becuase MotionTag library will require authentication before download
+          //this should come before jitpack else MotionTag library will require authentication before download
         maven { url "https://pkgs.dev.azure.com/motiontag/releases/_packaging/releases/maven/v1" }
         maven { url 'https://jitpack.io' }
     }
@@ -70,7 +70,7 @@ No change at root build.gradle is required. Everything listed in this session ca
 
 ### 2.1. Initialization
 
-You need to initialize the SDK before launching the Web App. We recommend doing this at your Application.
+You need to initialize the SDK before launching the Web App. We recommend doing this in your Application class.
 
 ```kotlin
     class App : android.app.Application() {
