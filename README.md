@@ -165,7 +165,7 @@ To log in returning user, use this function call
      Changers.logUserIn("*****")
  
 ```
-Passing in your uuid, The function can throw an exception if there is an error. It should be called in a background thread since it makes a network call. 
+Passing in your uuid, The function can throw an exception if there is an error. It should be called in a background thread since it makes a network call. It should be called before launching the WebActivity.
 
 
 ## 5. If anything fails, get in touch
