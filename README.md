@@ -110,7 +110,22 @@ You must create a notification so our foreground service can keep listening for 
     <activity
         android:name="com.blacksquared.sdk.activity.WebActivity"
         android:screenOrientation="portrait"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        
+        ///Add this part to handle deep link
+         <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="api.klima-taler.com"
+                    android:scheme="https" />
+
+                <data
+                    android:host="api.coin-stage.de"
+                    android:scheme="https" />
+            </intent-filter>
+    </activity>
 ``` 
 
 3. Create a file provider so the Web Application can persist data in your internal memory. Under `<application>`, add:
@@ -133,6 +148,24 @@ Under the desired interaction (in our example, it's the click of a button), laun
 ```Kotlin
     startActivity(WebActivity.newIntent(this))
 ```
+
+## 5. Get user UUID
+To fetch user uuid, use this function call
+
+``` 
+     Changers.uuid
+     
+```
+It will return the logged in user uuid or empty string if the uuid have not been created. Uuid will be created once the WebActivity have been launched at least once.
+
+## 6. Log in returning user
+To log in returning user, use this function call 
+
+```
+     Changers.logUserIn("*****")
+ 
+```
+Passing in your uuid, The function can throw an exception if there is an error. It should be called in a background thread since it makes a network call. 
 
 
 ## 5. If anything fails, get in touch
