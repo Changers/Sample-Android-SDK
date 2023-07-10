@@ -103,7 +103,13 @@ You must create a notification so our foreground service can keep listening for 
 1. Make sure you've setup your App class
 ```
     <application android:name=".App"
+          android:fullBackupContent="@xml/backup_rules"
+          android:dataExtractionRules="@xml/data_extraction_rules"
+          android:allowBackup="false"
 ```
+
+Where the file contents are as follows:
+     
 
 2. Register WebActivity so it can be launched:
 ```
