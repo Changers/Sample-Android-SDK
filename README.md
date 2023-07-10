@@ -109,7 +109,28 @@ You must create a notification so our foreground service can keep listening for 
 ```
 
 Where the file contents are as follows:
-     
+
+
+backup_rules.xml
+```
+     <?xml version="1.0" encoding="utf-8"?>
+          <full-backup-content>
+          <exclude domain="sharedpref" path="motiontag_tracker.xml"/>
+     </full-backup-content>
+```
+data_extraction_rules.xml
+```
+     <?xml version="1.0" encoding="utf-8"?>
+     <data-extraction-rules>
+              <cloud-backup>
+               <exclude domain="sharedpref" path="motiontag_tracker.xml"/>
+              </cloud-backup>
+               <device-transfer>
+                  <exclude domain="sharedpref" path="motiontag_tracker.xml"/>
+              </device-transfer>
+     </data-extraction-rules>
+```
+
 
 2. Register WebActivity so it can be launched:
 ```
