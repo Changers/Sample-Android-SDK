@@ -57,10 +57,10 @@ No change at root build.gradle is required. Everything listed in this session ca
 
 ```gradle
     dependencies {
-        implementation 'com.github.Changers.Android-SDK:sdk:1.16.2'
+        implementation 'com.github.Changers.Android-SDK:sdk:1.20.7'
         
         // for testing on stage use this
-        //implementation "com.github.Changers.Android-SDK:sdkstaging:1.16.2"
+        //implementation "com.github.Changers.Android-SDK:sdkstaging:1.20.7"
     }
 ``` 
 
@@ -176,7 +176,78 @@ Under the desired interaction (in our example, it's the click of a button), laun
     startActivity(WebActivity.newIntent(this))
 ```
 
-## 5. Get user UUID
+## 5. Deep links
+
+`Changers.openLink` hands a link to the SDK and opens the Changers web application on it. Use it
+when **your own app** catches the link — on your own domain, or any link you want to route
+yourself:
+
+```kotlin
+    Changers.openLink(this, uri)
+```
+
+From Java:
+
+```java
+    Changers.openLink(this, uri);
+```
+
+Put the intent filter on your own activity in that case, rather than on `WebActivity` as shown
+in section 3.2, and call `openLink` from it:
+
+```xml
+    <activity android:name=".DeepLinkActivity" android:exported="true">
+        <intent-filter android:autoVerify="true">
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:host="your.domain.example" android:scheme="https" />
+        </intent-filter>
+    </activity>
+```
+
+```kotlin
+    class DeepLinkActivity : AppCompatActivity() {
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            intent?.data?.let { Changers.openLink(this, it) }
+            finish()
+        }
+    }
+```
+
+The intent filter on `WebActivity` in section 3.2 still works for links on the Changers hosts —
+those open the web application directly and need no code from you. Use `openLink` for links that
+reach your own activity first.
+
+### If you do not want to open the web application yet
+
+`Changers.handleDeepLink` takes the link without opening anything. Use it when your app has its
+own screen to show first — the link is picked up the next time the web application opens:
+
+```kotlin
+    Changers.handleDeepLink(uri)
+```
+
+### Two requirements
+
+1. **`Changers.with(...)` must already have run** (section 2.1). A deep link can arrive at app
+   startup, before any of your own screens exist, so initialize from `Application.onCreate()` and
+   not from the activity that receives the link.
+2. **`WebActivity` must be registered** (section 3.2). `openLink` throws
+   `ActivityNotFoundException` without it.
+
+### Check the host first
+
+The SDK opens whatever link you give it. Make sure it is one of yours before calling —
+particularly on a custom URL scheme, since other SDKs in your app may use that scheme for their
+own callbacks.
+
+### Version
+
+`openLink` and `handleDeepLink` need **1.20.7 or later**. They do not exist in earlier versions.
+
+## 6. Get user UUID
 To fetch user uuid, use this function call
 
 ``` 
@@ -185,7 +256,7 @@ To fetch user uuid, use this function call
 ```
 It will return the logged in user uuid or empty string if the uuid have not been created. Uuid will be created once the WebActivity have been launched at least once.
 
-## 6. Log in returning user
+## 7. Log in returning user
 To log in returning user, use this function call 
 
 ```
@@ -195,5 +266,5 @@ To log in returning user, use this function call
 Passing in your uuid, The function can throw an exception if there is an error. It should be called in a background thread since it makes a network call. It should be called before launching the WebActivity.
 
 
-## 5. If anything fails, get in touch
+## 8. If anything fails, get in touch
 You can use our [helpdesk](https://changers.zendesk.com/hc). We're friendly. ;)
